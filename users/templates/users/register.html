@@ -1,0 +1,40 @@
+{% extends "core/base.html" %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <div class="card shadow-sm mt-4">
+            <div class="card-body">
+
+                <h2 class="text-center mb-4">
+                    Créer un compte
+                </h2>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+
+                    <button type="submit" class="btn btn-success w-100">
+                        S'inscrire
+                    </button>
+                </form>
+
+                <hr>
+
+                <p class="text-center">
+                    Déjà inscrit ?
+                    <a href="{% url 'login' %}">Se connecter</a>
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %} 

@@ -1,0 +1,200 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+Accueil - FripCI
+{% endblock %}
+
+{% block content %}
+
+<div class="text-center mb-4">
+
+    <h1 class="display-5 fw-bold">
+        🛍 FripCI
+    </h1>
+
+    <p class="lead">
+        La marketplace spécialisée dans la friperie premier choix.
+    </p>
+
+</div>
+
+<!-- FILTRES -->
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-body">
+
+        <form method="get">
+
+            <div class="row g-2">
+
+                <div class="col-md-4">
+
+                    <input
+                        type="text"
+                        name="q"
+                        class="form-control"
+                        placeholder="Rechercher un article..."
+                        value="{{ request.GET.q }}"
+                    >
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <select
+                        name="categorie"
+                        class="form-select">
+
+                        <option value="">
+                            Toutes les catégories
+                        </option>
+
+                        {% for categorie in categories %}
+
+                        <option
+                            value="{{ categorie.id }}"
+                            {% if request.GET.categorie == categorie.id|stringformat:"s" %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ categorie.nom }}
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <select
+                        name="ville"
+                        class="form-select">
+
+                        <option value="">
+                            Toutes les villes
+                        </option>
+
+                        {% for ville in villes %}
+
+                        <option
+                            value="{{ ville }}"
+                            {% if request.GET.ville == ville %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ ville }}
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <button
+                        class="btn btn-success w-100"
+                        type="submit">
+                        Rechercher
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ANNONCES -->
+
+<div class="row">
+
+    {% for annonce in annonces %}
+
+    <div class="col-md-4 mb-4">
+
+        <div class="card shadow-sm h-100 {% if annonce.premium %}border border-warning border-3{% endif %}">
+
+            {% if annonce.image %}
+
+            <img
+                src="{{ annonce.image.url }}"
+                class="card-img-top"
+                style="height:250px; object-fit:cover;"
+                alt="{{ annonce.titre }}"
+            >
+
+            {% endif %}
+
+            <div class="card-body">
+
+                {% if annonce.premium %}
+                <span class="badge bg-warning text-dark mb-2">
+                    ⭐ PREMIUM
+                </span>
+                {% endif %}
+
+                <h5 class="card-title">
+                    {{ annonce.titre }}
+                </h5>
+
+                <p class="text-muted mb-1">
+                    📍 {{ annonce.ville }}
+                </p>
+
+                <p class="mb-2">
+                    📂 {{ annonce.categorie.nom }}
+                </p>
+
+                <h5 class="text-success">
+                    {{ annonce.prix }} FCFA
+                </h5>
+
+                <p>
+                    {{ annonce.description|truncatechars:100 }}
+                </p>
+
+                <a
+                    href="{% url 'detail' annonce.pk %}"
+                    class="btn btn-success">
+                    Voir le détail
+                </a>
+
+            </div>
+
+            <div class="card-footer">
+
+                <small class="text-muted">
+                    👤 {{ annonce.vendeur.username }}
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="col-12">
+
+        <div class="alert alert-info">
+
+            Aucune annonce disponible.
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

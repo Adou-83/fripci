@@ -1,0 +1,124 @@
+{% extends "core/base.html" %}
+
+{% block title %}Mes annonces{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2>📦 Mes annonces</h2>
+
+    <a href="{% url 'create_annonce' %}" class="btn btn-success">
+        + Nouvelle annonce
+    </a>
+
+</div>
+
+{% if annonces %}
+
+<div class="row">
+
+    {% for annonce in annonces %}
+
+    <div class="col-md-4 mb-4">
+
+        <div class="card shadow-sm h-100">
+
+            {% if annonce.image %}
+                <img
+                    src="{{ annonce.image.url }}"
+                    class="card-img-top"
+                    style="height:250px; object-fit:cover;"
+                    alt="{{ annonce.titre }}"
+                >
+            {% endif %}
+
+            <div class="card-body">
+
+                {% if annonce.premium %}
+                    <span class="badge bg-warning text-dark mb-2">
+                        ⭐ Premium
+                    </span>
+                {% endif %}
+
+                <h5 class="card-title">
+                    {{ annonce.titre }}
+                </h5>
+
+                <p class="text-muted mb-1">
+                    📍 {{ annonce.ville }}
+                </p>
+
+                <p class="fw-bold text-success">
+                    {{ annonce.prix }} FCFA
+                </p>
+
+                <div class="d-flex gap-2 flex-wrap">
+
+                    <a href="{% url 'detail' annonce.pk %}"
+                       class="btn btn-outline-success btn-sm">
+                        Voir
+                    </a>
+
+                    <a href="{% url 'update_annonce' annonce.pk %}"
+                       class="btn btn-warning btn-sm">
+                        Modifier
+                    </a>
+
+                    <a href="{% url 'delete_annonce' annonce.pk %}"
+                       class="btn btn-danger btn-sm">
+                        Supprimer
+                    </a>
+
+                    {% if not annonce.premium %}
+                    <a href="{% url 'boost_annonce' annonce.pk %}"
+                       class="btn btn-primary btn-sm">
+                        ⭐ Booster
+                    </a>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <div class="card-footer text-muted small">
+
+                Créée le {{ annonce.cree_le|date:"d/m/Y" }}
+
+                {% if annonce.premium %}
+                    <br>
+                    <span class="text-warning fw-bold">
+                        ⭐ Annonce Premium
+                    </span>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="alert alert-info">
+
+    <h5>Aucune annonce publiée</h5>
+
+    <p>
+        Vous n'avez pas encore publié d'annonce.
+    </p>
+
+    <a href="{% url 'create_annonce' %}"
+       class="btn btn-success">
+        Publier ma première annonce
+    </a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

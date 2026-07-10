@@ -1,0 +1,41 @@
+{% extends "core/base.html" %}
+
+{% block title %}Publier une annonce{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <div class="card shadow-sm">
+
+            <div class="card-body">
+
+                <h2 class="mb-4">
+                    Publier une annonce
+                </h2>
+
+                <form method="post" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+
+                    <button
+                        type="submit"
+                        class="btn btn-success">
+                        Publier
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

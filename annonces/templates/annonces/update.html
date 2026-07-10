@@ -1,0 +1,31 @@
+{% extends "core/base.html" %}
+
+{% block title %}Modifier annonce{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    Modifier l'annonce
+</h2>
+
+<div class="card">
+    <div class="card-body">
+
+        <form method="post" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button
+                type="submit"
+                class="btn btn-success">
+                Enregistrer
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

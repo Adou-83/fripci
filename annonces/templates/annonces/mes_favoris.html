@@ -1,0 +1,52 @@
+{% extends "core/base.html" %}
+
+{% block title %}Mes favoris{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">❤️ Mes favoris</h2>
+
+<div class="row">
+
+    {% for favori in favoris %}
+
+    <div class="col-md-4 mb-4">
+
+        <div class="card h-100 shadow-sm">
+
+            {% if favori.annonce.image %}
+            <img src="{{ favori.annonce.image.url }}"
+                 class="card-img-top"
+                 style="height:250px;object-fit:cover;">
+            {% endif %}
+
+            <div class="card-body">
+
+                <h5>{{ favori.annonce.titre }}</h5>
+
+                <p class="text-success fw-bold">
+                    {{ favori.annonce.prix }} FCFA
+                </p>
+
+                <a href="{% url 'detail' favori.annonce.pk %}"
+                   class="btn btn-success">
+                    Voir
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="alert alert-info">
+        Aucun favori enregistré.
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

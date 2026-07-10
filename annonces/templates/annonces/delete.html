@@ -1,0 +1,40 @@
+{% extends "core/base.html" %}
+
+{% block title %}Supprimer annonce{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <div class="card-body">
+
+        <h3>
+            Supprimer cette annonce ?
+        </h3>
+
+        <p>
+            <strong>{{ annonce.titre }}</strong>
+        </p>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="btn btn-danger">
+                Oui supprimer
+            </button>
+
+            <a href="{% url 'mes_annonces' %}"
+               class="btn btn-secondary">
+                Annuler
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

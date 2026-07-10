@@ -1,0 +1,138 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+{{ annonce.titre }}
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <!-- IMAGES -->
+    <div class="col-md-6">
+
+        {% if annonce.image %}
+
+        <img
+            src="{{ annonce.image.url }}"
+            class="img-fluid rounded shadow-sm mb-3"
+            style="width:100%; object-fit:cover;"
+            alt="{{ annonce.titre }}"
+        >
+
+        {% endif %}
+
+        <!-- GALERIE -->
+        <div class="row">
+
+            {% for img in annonce.images.all %}
+
+            <div class="col-4 mb-2">
+
+                <img
+                    src="{{ img.image.url }}"
+                    class="img-fluid rounded shadow-sm"
+                    style="height:100px; object-fit:cover;"
+                >
+
+            </div>
+
+            {% empty %}
+
+            <p class="text-muted">
+                Aucune image supplémentaire
+            </p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    <!-- INFOS PRODUIT -->
+    <div class="col-md-6">
+
+        {% if annonce.premium %}
+        <span class="badge bg-warning text-dark mb-3">
+            ⭐ PREMIUM
+        </span>
+        {% endif %}
+
+        <h2>{{ annonce.titre }}</h2>
+
+        <p class="text-muted">📍 {{ annonce.ville }}</p>
+        <p>📂 {{ annonce.categorie.nom }}</p>
+        <p>👕 État : {{ annonce.get_etat_display }}</p>
+
+        {% if annonce.marque %}
+        <p>🏷 Marque : {{ annonce.marque }}</p>
+        {% endif %}
+
+        {% if annonce.taille %}
+        <p>📏 Taille : {{ annonce.taille }}</p>
+        {% endif %}
+
+        <hr>
+
+        <h3 class="text-success">
+            {{ annonce.prix }} FCFA
+        </h3>
+
+        <p>{{ annonce.description }}</p>
+
+        <hr>
+
+        <p>
+            👤 Vendeur :
+            <strong>{{ annonce.vendeur.username }}</strong>
+        </p>
+
+        {% if annonce.boost_le %}
+        <p class="text-warning">
+            ⭐ Annonce mise en avant
+        </p>
+        {% endif %}
+
+        <!-- ❤️ FAVORIS -->
+        {% if user.is_authenticated %}
+
+        <div class="mb-3">
+
+            <a href="{% url 'ajouter_favori' annonce.pk %}"
+               class="btn btn-outline-danger w-100 mb-2">
+                ❤️ Ajouter aux favoris
+            </a>
+
+            <a href="{% url 'supprimer_favori' annonce.pk %}"
+               class="btn btn-outline-secondary w-100">
+                ❌ Retirer des favoris
+            </a>
+
+        </div>
+
+        {% endif %}
+
+        <!-- WHATSAPP -->
+        {% if annonce.vendeur.telephone %}
+
+        <a
+            href="https://wa.me/{{ annonce.vendeur.telephone }}?text=Bonjour%20je%20suis%20intéressé%20par%20votre%20article%20{{ annonce.titre }}"
+            target="_blank"
+            class="btn btn-success btn-lg w-100">
+
+            📱 Contacter sur WhatsApp
+        </a>
+
+        {% else %}
+
+        <div class="alert alert-warning">
+            Numéro de téléphone non disponible
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

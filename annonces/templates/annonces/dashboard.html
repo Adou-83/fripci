@@ -1,0 +1,179 @@
+```html
+{% extends "core/base.html" %}
+
+{% block title %}Dashboard vendeur{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2>📊 Tableau de bord</h2>
+            <p class="text-muted">
+                Bienvenue {{ user.username }}
+            </p>
+        </div>
+
+        <a href="{% url 'create_annonce' %}" class="btn btn-success">
+            ➕ Nouvelle annonce
+        </a>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body text-center">
+
+                    <h1 class="text-success">
+                        {{ total_annonces }}
+                    </h1>
+
+                    <h5>
+                        📦 Annonces
+                    </h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body text-center">
+
+                    <h1 class="text-warning">
+                        {{ annonces_premium }}
+                    </h1>
+
+                    <h5>
+                        ⭐ Premium
+                    </h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body text-center">
+
+                    <h1 class="text-danger">
+                        {{ total_favoris }}
+                    </h1>
+
+                    <h5>
+                        ❤️ Favoris reçus
+                    </h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-success text-white">
+
+            Mes dernières annonces
+
+        </div>
+
+        <div class="card-body">
+
+            {% if dernieres_annonces %}
+
+            <table class="table table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Titre</th>
+                        <th>Prix</th>
+                        <th>Ville</th>
+                        <th>Premium</th>
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for annonce in dernieres_annonces %}
+
+                    <tr>
+
+                        <td>{{ annonce.titre }}</td>
+
+                        <td>{{ annonce.prix }} FCFA</td>
+
+                        <td>{{ annonce.ville }}</td>
+
+                        <td>
+
+                            {% if annonce.premium %}
+
+                                ⭐
+
+                            {% else %}
+
+                                -
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <a href="{% url 'detail' annonce.pk %}"
+                               class="btn btn-success btn-sm">
+
+                                Voir
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+
+            <div class="alert alert-info">
+
+                Vous n'avez encore publié aucune annonce.
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+```
