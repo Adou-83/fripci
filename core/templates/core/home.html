@@ -1,50 +1,302 @@
 {% extends "core/base.html" %}
 
 {% block title %}
-Accueil - FripCI
+FripCI — La mode de seconde main, autrement
 {% endblock %}
 
 {% block content %}
 
-<div class="text-center mb-4">
+<style>
 
-    <h1 class="display-5 fw-bold">
-        🛍 FripCI
-    </h1>
+    /* ==============================
+       HERO
+    ============================== */
 
-    <p class="lead">
-        La marketplace spécialisée dans la friperie premier choix.
-    </p>
+    .frip-hero {
+        background:
+            linear-gradient(
+                135deg,
+                rgba(25, 135, 84, 0.96),
+                rgba(13, 110, 253, 0.88)
+            );
+        border-radius: 24px;
+        padding: 55px 40px;
+        color: white;
+        margin-bottom: 35px;
+        overflow: hidden;
+        position: relative;
+    }
 
-</div>
+    .frip-hero::after {
+        content: "";
+        position: absolute;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.08);
+        right: -80px;
+        top: -90px;
+    }
 
-<!-- FILTRES -->
+    .frip-hero h1 {
+        font-size: clamp(2.2rem, 5vw, 4rem);
+        font-weight: 800;
+        line-height: 1.05;
+    }
 
-<div class="card shadow-sm mb-4">
+    .frip-hero p {
+        font-size: 1.15rem;
+        max-width: 650px;
+        opacity: .92;
+    }
 
-    <div class="card-body">
+    .hero-search {
+        background: white;
+        padding: 8px;
+        border-radius: 14px;
+        margin-top: 28px;
+    }
 
-        <form method="get">
+    .hero-search input,
+    .hero-search select {
+        border: none;
+        box-shadow: none !important;
+    }
 
-            <div class="row g-2">
+    .hero-search .btn {
+        border-radius: 10px;
+        padding: 12px 22px;
+        font-weight: 600;
+    }
 
-                <div class="col-md-4">
+
+    /* ==============================
+       TITRES
+    ============================== */
+
+    .section-title {
+        font-weight: 800;
+        margin-bottom: 5px;
+    }
+
+    .section-subtitle {
+        color: #6c757d;
+        margin-bottom: 22px;
+    }
+
+
+    /* ==============================
+       CATEGORIES
+    ============================== */
+
+    .category-card {
+        border: none;
+        border-radius: 18px;
+        padding: 22px 15px;
+        background: white;
+        box-shadow: 0 5px 20px rgba(0,0,0,.06);
+        text-align: center;
+        height: 100%;
+        transition: .25s;
+    }
+
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(0,0,0,.10);
+    }
+
+    .category-icon {
+        width: 58px;
+        height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto auto 12px;
+        border-radius: 50%;
+        background: #e9f7ef;
+        font-size: 1.7rem;
+    }
+
+
+    /* ==============================
+       PRODUITS
+    ============================== */
+
+    .product-card {
+        border: none;
+        border-radius: 18px;
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 5px 22px rgba(0,0,0,.07);
+        transition: .25s;
+        height: 100%;
+    }
+
+    .product-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 14px 35px rgba(0,0,0,.12);
+    }
+
+    .product-image-wrapper {
+        position: relative;
+        overflow: hidden;
+        background: #f1f3f5;
+    }
+
+    .product-image {
+        width: 100%;
+        height: 270px;
+        object-fit: cover;
+        transition: .35s;
+    }
+
+    .product-card:hover .product-image {
+        transform: scale(1.04);
+    }
+
+    .premium-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: #ffc107;
+        color: #212529;
+        padding: 6px 10px;
+        border-radius: 30px;
+        font-size: .78rem;
+        font-weight: 700;
+    }
+
+    .product-body {
+        padding: 18px;
+    }
+
+    .product-title {
+        font-weight: 700;
+        font-size: 1.05rem;
+        margin-bottom: 7px;
+    }
+
+    .product-price {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: #198754;
+    }
+
+    .product-meta {
+        color: #6c757d;
+        font-size: .88rem;
+    }
+
+    .product-button {
+        border-radius: 10px;
+        font-weight: 600;
+    }
+
+
+    /* ==============================
+       BANDEAU
+    ============================== */
+
+    .trust-section {
+        background: white;
+        border-radius: 20px;
+        padding: 28px;
+        box-shadow: 0 5px 20px rgba(0,0,0,.05);
+        margin: 45px 0;
+    }
+
+    .trust-item {
+        text-align: center;
+        padding: 10px;
+    }
+
+    .trust-icon {
+        font-size: 2rem;
+        margin-bottom: 8px;
+    }
+
+
+    /* ==============================
+       MOBILE
+    ============================== */
+
+    @media (max-width: 768px) {
+
+        .frip-hero {
+            padding: 35px 22px;
+            border-radius: 18px;
+        }
+
+        .hero-search {
+            padding: 12px;
+        }
+
+        .hero-search .row > div {
+            margin-bottom: 8px;
+        }
+
+        .product-image {
+            height: 230px;
+        }
+
+    }
+
+</style>
+
+
+<!-- ==================================================
+     HERO
+================================================== -->
+
+<section class="frip-hero">
+
+    <div class="position-relative" style="z-index:2;">
+
+        <span class="badge bg-light text-success mb-3 px-3 py-2">
+            ✨ Bienvenue sur FripCI
+        </span>
+
+        <h1>
+            Trouvez votre prochaine
+            <br>
+            pièce coup de ❤️
+        </h1>
+
+        <p class="mt-3">
+            Découvrez des vêtements, chaussures, sacs et accessoires
+            soigneusement sélectionnés par notre communauté.
+        </p>
+
+
+        <!-- RECHERCHE -->
+
+        <form
+            method="get"
+            action="{% url 'home' %}"
+            class="hero-search"
+        >
+
+            <div class="row g-2 align-items-center">
+
+                <div class="col-lg-5">
 
                     <input
                         type="text"
                         name="q"
-                        class="form-control"
-                        placeholder="Rechercher un article..."
+                        class="form-control form-control-lg"
+                        placeholder="Que recherchez-vous ?"
                         value="{{ request.GET.q }}"
                     >
 
                 </div>
 
-                <div class="col-md-3">
+
+                <div class="col-lg-3">
 
                     <select
                         name="categorie"
-                        class="form-select">
+                        class="form-select form-select-lg"
+                    >
 
                         <option value="">
                             Toutes les catégories
@@ -67,11 +319,13 @@ Accueil - FripCI
 
                 </div>
 
-                <div class="col-md-3">
+
+                <div class="col-lg-2">
 
                     <select
                         name="ville"
-                        class="form-select">
+                        class="form-select form-select-lg"
+                    >
 
                         <option value="">
                             Toutes les villes
@@ -94,12 +348,14 @@ Accueil - FripCI
 
                 </div>
 
-                <div class="col-md-2">
+
+                <div class="col-lg-2">
 
                     <button
-                        class="btn btn-success w-100"
-                        type="submit">
-                        Rechercher
+                        type="submit"
+                        class="btn btn-success btn-lg w-100"
+                    >
+                        🔎 Rechercher
                     </button>
 
                 </div>
@@ -110,70 +366,312 @@ Accueil - FripCI
 
     </div>
 
-</div>
+</section>
 
-<!-- ANNONCES -->
 
-<div class="row">
+<!-- ==================================================
+     CATEGORIES
+================================================== -->
 
-    {% for annonce in annonces %}
+<section class="mb-5">
 
-    <div class="col-md-4 mb-4">
+    <div class="d-flex justify-content-between align-items-end mb-3">
 
-        <div class="card shadow-sm h-100 {% if annonce.premium %}border border-warning border-3{% endif %}">
+        <div>
 
-            {% if annonce.image %}
+            <h2 class="section-title">
+                Explorer par catégorie
+            </h2>
 
-            <img
-                src="{{ annonce.image.url }}"
-                class="card-img-top"
-                style="height:250px; object-fit:cover;"
-                alt="{{ annonce.titre }}"
+            <p class="section-subtitle mb-0">
+                Trouvez rapidement ce qui vous correspond.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="row g-3">
+
+        {% for categorie in categories %}
+
+        <div class="col-6 col-md-3">
+
+            <a
+                href="?categorie={{ categorie.id }}"
+                class="text-decoration-none text-dark"
             >
 
-            {% endif %}
+                <div class="category-card">
 
-            <div class="card-body">
+                    <div class="category-icon">
 
+                        {% if categorie.nom|lower == "vêtements" %}
+                            👕
+                        {% elif categorie.nom|lower == "chaussures" %}
+                            👟
+                        {% elif categorie.nom|lower == "sacs" %}
+                            👜
+                        {% elif categorie.nom|lower == "accessoires" %}
+                            🕶️
+                        {% else %}
+                            🛍️
+                        {% endif %}
+
+                    </div>
+
+                    <h6 class="fw-bold mb-0">
+                        {{ categorie.nom }}
+                    </h6>
+
+                </div>
+
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     ANNONCES
+================================================== -->
+
+<section class="mb-5">
+
+    <div class="d-flex justify-content-between align-items-end mb-3">
+
+        <div>
+
+            <h2 class="section-title">
+                🔥 Les dernières trouvailles
+            </h2>
+
+            <p class="section-subtitle mb-0">
+                Les articles récemment publiés sur FripCI.
+            </p>
+
+        </div>
+
+        {% if user.is_authenticated %}
+
+        <a
+            href="{% url 'create_annonce' %}"
+            class="btn btn-success d-none d-md-inline-block"
+        >
+            + Vendre un article
+        </a>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="row g-4">
+
+        {% for annonce in annonces %}
+
+        <div class="col-6 col-md-4 col-lg-3">
+
+            <div
+                class="product-card
                 {% if annonce.premium %}
-                <span class="badge bg-warning text-dark mb-2">
-                    ⭐ PREMIUM
-                </span>
-                {% endif %}
+                    border border-warning
+                {% endif %}"
+            >
 
-                <h5 class="card-title">
-                    {{ annonce.titre }}
-                </h5>
+                <!-- IMAGE -->
 
-                <p class="text-muted mb-1">
-                    📍 {{ annonce.ville }}
-                </p>
+                <div class="product-image-wrapper">
 
-                <p class="mb-2">
-                    📂 {{ annonce.categorie.nom }}
-                </p>
+                    {% if annonce.image %}
 
-                <h5 class="text-success">
-                    {{ annonce.prix }} FCFA
-                </h5>
+                    <img
+                        src="{{ annonce.image.url }}"
+                        class="product-image"
+                        alt="{{ annonce.titre }}"
+                    >
 
-                <p>
-                    {{ annonce.description|truncatechars:100 }}
-                </p>
+                    {% else %}
 
-                <a
-                    href="{% url 'detail' annonce.pk %}"
-                    class="btn btn-success">
-                    Voir le détail
-                </a>
+                    <div
+                        class="product-image d-flex align-items-center justify-content-center"
+                    >
+                        <span class="text-muted">
+                            📷 Pas de photo
+                        </span>
+                    </div>
+
+                    {% endif %}
+
+
+                    {% if annonce.premium %}
+
+                    <span class="premium-badge">
+                        ⭐ PREMIUM
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- INFOS -->
+
+                <div class="product-body">
+
+                    <div class="product-title">
+
+                        {{ annonce.titre|truncatechars:38 }}
+
+                    </div>
+
+
+                    <div class="product-meta mb-2">
+
+                        📍 {{ annonce.ville }}
+
+                    </div>
+
+
+                    <div class="product-meta mb-2">
+
+                        {{ annonce.categorie.nom }}
+
+                    </div>
+
+
+                    <div class="product-price mb-3">
+
+                        {{ annonce.prix }} FCFA
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'detail' annonce.pk %}"
+                        class="btn btn-outline-success product-button w-100"
+                    >
+                        Voir l'article →
+                    </a>
+
+                </div>
 
             </div>
 
-            <div class="card-footer">
+        </div>
 
-                <small class="text-muted">
-                    👤 {{ annonce.vendeur.username }}
-                </small>
+
+        {% empty %}
+
+        <div class="col-12">
+
+            <div class="alert alert-info text-center p-4">
+
+                <h5>
+                    Aucun article trouvé
+                </h5>
+
+                <p class="mb-0">
+                    Essayez de modifier vos critères de recherche.
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     POURQUOI FRIPCI
+================================================== -->
+
+<section class="trust-section">
+
+    <div class="text-center mb-4">
+
+        <h2 class="section-title">
+            Pourquoi choisir FripCI ?
+        </h2>
+
+        <p class="section-subtitle mb-0">
+            Une marketplace pensée pour acheter et vendre simplement.
+        </p>
+
+    </div>
+
+
+    <div class="row g-3">
+
+        <div class="col-md-4">
+
+            <div class="trust-item">
+
+                <div class="trust-icon">
+                    🔎
+                </div>
+
+                <h5 class="fw-bold">
+                    Trouvez facilement
+                </h5>
+
+                <p class="text-muted mb-0">
+                    Recherchez par article, catégorie ou ville.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="trust-item">
+
+                <div class="trust-icon">
+                    📸
+                </div>
+
+                <h5 class="fw-bold">
+                    Des annonces détaillées
+                </h5>
+
+                <p class="text-muted mb-0">
+                    Plusieurs photos permettent de mieux découvrir
+                    chaque article.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="trust-item">
+
+                <div class="trust-icon">
+                    🤝
+                </div>
+
+                <h5 class="fw-bold">
+                    Acheteurs et vendeurs
+                </h5>
+
+                <p class="text-muted mb-0">
+                    Échangez directement avec les vendeurs
+                    pour vos achats.
+                </p>
 
             </div>
 
@@ -181,20 +679,46 @@ Accueil - FripCI
 
     </div>
 
-    {% empty %}
+</section>
 
-    <div class="col-12">
 
-        <div class="alert alert-info">
+<!-- ==================================================
+     CTA VENDEUR
+================================================== -->
 
-            Aucune annonce disponible.
+<section
+    class="text-center py-5 mb-4"
+>
 
-        </div>
+    <h2 class="fw-bold">
+        Vous avez des articles à vendre ?
+    </h2>
 
-    </div>
+    <p class="text-muted mb-4">
+        Publiez votre annonce sur FripCI et présentez vos articles
+        à de nouveaux acheteurs.
+    </p>
 
-    {% endfor %}
+    {% if user.is_authenticated %}
 
-</div>
+        <a
+            href="{% url 'create_annonce' %}"
+            class="btn btn-success btn-lg px-4"
+        >
+            🚀 Publier une annonce
+        </a>
+
+    {% else %}
+
+        <a
+            href="{% url 'register' %}"
+            class="btn btn-success btn-lg px-4"
+        >
+            Créer mon compte
+        </a>
+
+    {% endif %}
+
+</section>
 
 {% endblock %}

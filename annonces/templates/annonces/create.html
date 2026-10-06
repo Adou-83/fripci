@@ -1,6 +1,6 @@
 {% extends "core/base.html" %}
 
-{% block title %}Publier une annonce{% endblock %}
+{% block title %}Publier une annonce - FripCI{% endblock %}
 
 {% block content %}
 
@@ -10,23 +10,259 @@
 
         <div class="card shadow-sm">
 
-            <div class="card-body">
+            <div class="card-body p-4">
 
-                <h2 class="mb-4">
-                    Publier une annonce
+                <h2 class="mb-2">
+                    📦 Publier une annonce
                 </h2>
 
-                <form method="post" enctype="multipart/form-data">
+                <p class="text-muted mb-4">
+                    Présentez votre article avec plusieurs photos
+                    pour faciliter la décision des acheteurs.
+                </p>
+
+
+                <!-- ERREURS GENERALES -->
+
+                {% if form.non_field_errors %}
+
+                    <div class="alert alert-danger">
+
+                        {% for error in form.non_field_errors %}
+
+                            <div>
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+
+                <form
+                    method="post"
+                    enctype="multipart/form-data"
+                >
 
                     {% csrf_token %}
 
-                    {{ form.as_p }}
 
-                    <button
-                        type="submit"
-                        class="btn btn-success">
-                        Publier
-                    </button>
+                    <!-- TITRE -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="{{ form.titre.id_for_label }}"
+                            class="form-label fw-bold"
+                        >
+                            Titre de l'annonce
+                        </label>
+
+                        {{ form.titre }}
+
+                        {% for error in form.titre.errors %}
+
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- CATEGORIE -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="{{ form.categorie.id_for_label }}"
+                            class="form-label fw-bold"
+                        >
+                            Catégorie
+                        </label>
+
+                        {{ form.categorie }}
+
+                        {% for error in form.categorie.errors %}
+
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- PRIX + VILLE -->
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <label
+                                for="{{ form.prix.id_for_label }}"
+                                class="form-label fw-bold"
+                            >
+                                Prix (FCFA)
+                            </label>
+
+                            {{ form.prix }}
+
+                            {% for error in form.prix.errors %}
+
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <div class="col-md-6 mb-3">
+
+                            <label
+                                for="{{ form.ville.id_for_label }}"
+                                class="form-label fw-bold"
+                            >
+                                Ville
+                            </label>
+
+                            {{ form.ville }}
+
+                            {% for error in form.ville.errors %}
+
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="{{ form.description.id_for_label }}"
+                            class="form-label fw-bold"
+                        >
+                            Description
+                        </label>
+
+                        {{ form.description }}
+
+                        {% for error in form.description.errors %}
+
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- PHOTO PRINCIPALE -->
+
+                    <div class="mb-4">
+
+                        <label
+                            for="{{ form.image.id_for_label }}"
+                            class="form-label fw-bold"
+                        >
+                            📸 Photo principale
+                        </label>
+
+                        {{ form.image }}
+
+                        <div class="form-text">
+                            Cette photo sera la photo principale
+                            de votre annonce.
+                        </div>
+
+                        {% for error in form.image.errors %}
+
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- PHOTOS SUPPLEMENTAIRES -->
+
+                    <div class="mb-4">
+
+                        <label
+                            for="images"
+                            class="form-label fw-bold"
+                        >
+                            🖼️ Photos supplémentaires
+                        </label>
+
+                        <input
+                            type="file"
+                            name="images"
+                            id="images"
+                            class="form-control"
+                            accept="image/*"
+                            multiple
+                        >
+
+                        <div class="form-text">
+                            Ajoutez jusqu'à 4 photos supplémentaires.
+                        </div>
+
+                    </div>
+
+
+                    <!-- INFORMATION -->
+
+                    <div class="alert alert-light border mb-4">
+
+                        <strong>
+                            💡 Conseil
+                        </strong>
+
+                        <p class="mb-0 mt-1">
+                            Ajoutez plusieurs vues de votre article :
+                            devant, derrière, détail, étiquette,
+                            marque, etc.
+                        </p>
+
+                    </div>
+
+
+                    <!-- BOUTONS -->
+
+                    <div class="d-flex gap-2">
+
+                        <a
+                            href="{% url 'home' %}"
+                            class="btn btn-outline-secondary"
+                        >
+                            Annuler
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success flex-grow-1"
+                        >
+                            🚀 Publier l'annonce
+                        </button>
+
+                    </div>
 
                 </form>
 
